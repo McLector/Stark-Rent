@@ -1,11 +1,11 @@
 # StarkRent — Equipment Rental System
 
-A production-ready mobile app for construction equipment rental management built with React Native Expo SDK 54 + TypeScript + Supabase.
+A production-ready mobile app for construction equipment rental management built with React Native Expo SDK 57 + TypeScript + Supabase.
 
 ---
 
 ## Stack
-- **React Native** 0.81.5 + Expo SDK 54
+- **React Native** 0.86.3 + Expo SDK 57
 - **TypeScript** 5.9
 - **Supabase** (Auth + PostgreSQL + RLS)
 - **React Navigation** v7 (Stack + Bottom Tabs)
@@ -49,7 +49,7 @@ UPDATE profiles SET role = 'admin' WHERE email = 'your@email.com';
 ```bash
 npm start
 ```
-Scan the QR code with Expo Go on your phone (SDK 54).
+Scan the QR code with Expo Go on your phone (SDK 57).
 
 ---
 
@@ -112,9 +112,8 @@ Triggers automatically handle `available_quantity` on the equipment table whenev
 ---
 
 ## Notes
-- Entry point is `index.ts` → `App.tsx` (React Navigation). `app/_layout.tsx` is a
-  7-line expo-router stub that renders `null` — it only satisfies expo-router's
-  file requirement and does not participate in navigation. Do not delete it.
+- Entry point is `index.ts` → `App.tsx` (React Navigation only — expo-router was
+  removed in the SDK 57 upgrade because the two are no longer compatible).
 - All images use Unsplash URLs — replace with your own or add Supabase Storage
 - Dark mode is toggleable per-user in the Profile screen
 - The app uses React Navigation (not Expo Router) for full control over role-based routing
