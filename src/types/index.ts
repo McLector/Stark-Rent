@@ -30,9 +30,8 @@ export type EquipmentCondition = 'Excellent' | 'Good' | 'Fair' | 'Needs Maintena
 export interface Equipment {
   id: string;
   name: string;
-  categories: EquipmentCategory[];  // multiple categories supported
-  category: EquipmentCategory; // primary (legacy)
-  categories: EquipmentCategory[]; // multi-category  // primary category (first in array, kept for backward compat)
+  categories: EquipmentCategory[]; // multi-category
+  category: EquipmentCategory; // primary (legacy) — category = categories[0] for backward compat
   description: string;
   daily_rate: number;
   weekly_rate: number;

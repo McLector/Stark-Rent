@@ -62,6 +62,16 @@ const MyRentalsStyle = StyleSheet.create({
     marginTop: 8,
   },
   cancelText: { fontSize: 15, fontWeight: '700' },
+  actionBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderRadius: 12,
+    paddingVertical: 14,
+    marginTop: 8,
+  },
+  actionBtnText: { fontSize: 15, fontWeight: '700' },
   searchRow: {
     paddingHorizontal: 16,
     paddingVertical: 10,

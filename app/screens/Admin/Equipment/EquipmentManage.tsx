@@ -357,7 +357,7 @@ const EquipmentManage = ({ navigation }: Props) => {
               {([
                 { key: 'name', label: 'Equipment Name', placeholder: 'e.g. CAT 320 Excavator' },
                 { key: 'description', label: 'Description', placeholder: 'Brief description...', multiline: true },
-              ] as Array<{ key: keyof EquipmentForm; label: string; placeholder: string; multiline?: boolean }>).map((f) => (
+              ] as Array<{ key: 'name' | 'description'; label: string; placeholder: string; multiline?: boolean }>).map((f) => (
                 <View key={f.key} style={EquipmentManageStyle.fieldGroup}>
                   <Text style={[EquipmentManageStyle.label, { color: colors.textSecondary }]}>{f.label}</Text>
                   <View style={[EquipmentManageStyle.inputWrapper, { backgroundColor: colors.inputBg, borderColor: errors[f.key] ? colors.danger : colors.inputBorder }]}>
@@ -414,7 +414,7 @@ const EquipmentManage = ({ navigation }: Props) => {
                   { key: 'daily_rate', label: 'Daily Rate (₱)' },
                   { key: 'weekly_rate', label: 'Weekly Rate (₱)' },
                   { key: 'monthly_rate', label: 'Monthly Rate (₱)' },
-                ] as Array<{ key: keyof EquipmentForm; label: string }>).map((f) => (
+                ] as Array<{ key: 'daily_rate' | 'weekly_rate' | 'monthly_rate'; label: string }>).map((f) => (
                   <View key={f.key} style={[EquipmentManageStyle.fieldGroup, { flex: 1 }]}>
                     <Text style={[EquipmentManageStyle.label, { color: colors.textSecondary }]}>{f.label}</Text>
                     <View style={[EquipmentManageStyle.inputWrapper, { backgroundColor: colors.inputBg, borderColor: errors[f.key] ? colors.danger : colors.inputBorder }]}>

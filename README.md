@@ -31,11 +31,13 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 ```
 Find these in your Supabase dashboard → Project Settings → API.
 
-### 3. Run the SQL schema
+### 3. Run the SQL migrations
 - Go to your Supabase dashboard
 - Open the **SQL Editor**
-- Paste and run the full contents of `database.sql`
-- This creates all tables, triggers, RLS policies, indexes, and seeds 16 construction equipment items
+- Run each file in `backend/supabase/migrations/` **in name order**
+  (`0001` → `0006`), one at a time
+- This creates all tables, triggers, RLS policies, indexes, the storage bucket,
+  and seeds 16 construction equipment items
 
 ### 4. Create your first admin account
 After running the SQL, register normally through the app, then manually promote yourself to admin:
@@ -100,12 +102,19 @@ StarkRent/
 - `profiles` — user accounts with role (admin/customer)
 - `equipment` — construction equipment catalog with specs (JSONB)
 - `rentals` — rental transactions with full lifecycle status
+- `rental_messages` — per-rental customer↔admin chat (realtime)
+- `extension_requests` — customer requests to extend `end_date`
+- Storage bucket `equipment-images` (public read, authenticated write)
+- RPC `clear_maintenance_flag(equipment_id)` — clears service flag after repair
 
 Triggers automatically handle `available_quantity` on the equipment table whenever rental status changes — no manual sync needed.
 
 ---
 
 ## Notes
+- Entry point is `index.ts` → `App.tsx` (React Navigation). `app/_layout.tsx` is a
+  7-line expo-router stub that renders `null` — it only satisfies expo-router's
+  file requirement and does not participate in navigation. Do not delete it.
 - All images use Unsplash URLs — replace with your own or add Supabase Storage
 - Dark mode is toggleable per-user in the Profile screen
 - The app uses React Navigation (not Expo Router) for full control over role-based routing

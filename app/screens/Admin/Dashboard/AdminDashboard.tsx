@@ -8,7 +8,7 @@ import { supabase } from '../../../../src/lib/supabase';
 import useAuth from '../../../../src/hooks/useAuth';
 import useTheme from '../../../../src/hooks/useTheme';
 import NotificationBell from '../../../../src/components/NotificationBell/NotificationBell';
-import { Rental, AdminStackParamList } from '../../../../src/types';
+import { Rental, Equipment, AdminStackParamList } from '../../../../src/types';
 import { formatCurrency, formatDate } from '../../../../src/utils/format';
 import StatusBadge from '../../../../src/components/StatusBadge/StatusBadge';
 import LoadingSpinner from '../../../../src/components/LoadingSpinner/LoadingSpinner';
@@ -39,12 +39,12 @@ const AdminDashboard = ({ navigation }: Props) => {
 
   const load = useCallback(async () => {
     const [eqRes, rnRes, custRes] = await Promise.all([
-      supabase.from('equipment').select('total_quantity, available_quantity, is_active'),
+      supabase.from('equipment').select('total_quantity, available_quantity, is_active, needs_maintenance'),
       supabase.from('rentals').select('*, equipment(name, image_url), customer:profiles(full_name)').order('created_at', { ascending: false }).limit(10),
       supabase.from('profiles').select('id').eq('role', 'customer'),
     ]);
 
-    const equipment = eqRes.data ?? [];
+    const equipment: Pick<Equipment, 'total_quantity' | 'available_quantity' | 'is_active' | 'needs_maintenance'>[] = eqRes.data ?? [];
     const allRentals = (rnRes.data ?? []) as Rental[];
 
     const revenue = allRentals
@@ -103,7 +103,11 @@ const AdminDashboard = ({ navigation }: Props) => {
           {stats.pendingRequests > 0 && (
             <TouchableOpacity
               style={AdminDashboardStyle.alertBanner}
-              onPress={() => navigation.navigate('AdminTabs', { screen: 'RentalRequests' } as never)}
+              onPress={() => {
+                const pending = recentRentals.find((r) => r.status === 'pending');
+                if (pending) navigation.navigate('RentalDetail', { rentalId: pending.id });
+                else navigation.navigate('ExtensionRequests');
+              }}
             >
               <MaterialIcons name="notification-important" size={18} color="#FFF" />
               <Text style={AdminDashboardStyle.alertText}>
